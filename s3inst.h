@@ -109,4 +109,9 @@ typedef struct lr {
     int dead;
     struct lr *next;
 } live_range;
+
+typedef struct in {
+	int* interferences;
+	int degree;
+} intNode;
 #endif

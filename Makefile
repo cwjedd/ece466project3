@@ -1,7 +1,7 @@
 
 .PHONY: all tests
 
-OBJS :=  minicsched.o s3.y.o s3.lex.o generate_cfg.o liveness.o generate_ddg.o
+OBJS :=  minicsched.o s3.y.o s3.lex.o generate_cfg.o liveness.o generate_ddg.o interference.o
 
 all: sched
 
@@ -32,6 +32,7 @@ s3.y.o :s3inst.h s3.lex
 liveness.o: liveness.c
 generate_cfg.o: generate_cfg.c
 generate_ddg.o: generate_ddg.c
+interference.o: interference.c
 
 include Make.defs
 include Make.rules

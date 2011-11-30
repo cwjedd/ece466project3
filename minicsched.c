@@ -38,15 +38,13 @@ int main(int argc, char **argv) {
 }
 
 void c_optimize() {
-   inst_t current = instList;
+    inst_t current;
     int size=0;
-    while(current->next != NULL) {
-        size++;
-        current=current->next;
-    }
+
     live_range *live;
+    live = (live_range*)malloc(sizeof(live_range));
     block_array cfg;
-    //ddg_t ddg;
+    ddg_t ddg;
     /* file pointer to dump output code */
     FILE *fptr = fopen(outfile, "w");
 
@@ -62,8 +60,15 @@ void c_optimize() {
         print_list(stdout, instList);
 
     find_function(); /* remove extra instructions needed for simulation */
+
+    current = instList;
+    while(current->next != NULL) {
+        size++;
+        current=current->next;
+    }
+    
     cfg = generate_cfg();
-   // ddg = generate_ddg();
+    ddg = generate_ddg();
     live=liveness(size);
     live->dead++;
     live->dead--;
@@ -78,6 +83,7 @@ void c_optimize() {
     /* Find single basic block loops and perform Iterative Modulo Scheduling */
 
   multiOpSetup(instList);
+  calcInterference(live, 100);
 	
   if (flag_regalloc)
     {

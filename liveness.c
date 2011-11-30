@@ -4,7 +4,6 @@
 #include "s3inst.h"
 #include "cmdline.h"
 #include "functions.h"
-#include "defines.h"
 
 extern inst_t instList;
 live_range* liveness(int size) {
