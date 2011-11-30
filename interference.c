@@ -27,11 +27,11 @@ intNode* calcInterference(live_range* live, int size)
 		{
 			if(i != j)							// do not check node against itself
 			{
-				if( ((live[j].go_live >= live[i].go_live) && (live[j].go_live <= live[i].dead)) ||	// check if j's go_live falls within i's live range
-				    ((live[j].dead >= live[i].go_live) && (live[j].dead <= live[i].dead)) ||		// check if j's dead falls within i's live range
+				if( ((live[j].go_live > live[i].go_live) && (live[j].go_live < live[i].dead)) ||	// check if j's go_live falls within i's live range
+				    ((live[j].dead > live[i].go_live) && (live[j].dead < live[i].dead)) ||		// check if j's dead falls within i's live range
 
-				    ((live[i].go_live >= live[j].go_live) && (live[i].go_live <= live[j].dead)) ||	// check if i's go_live falls within j's live range
-				    ((live[i].dead >= live[j].go_live) && (live[i].dead <= live[j].dead)) )		// check if i's dead falls within j's live range
+				    ((live[i].go_live > live[j].go_live) && (live[i].go_live < live[j].dead)) ||	// check if i's go_live falls within j's live range
+				    ((live[i].dead > live[j].go_live) && (live[i].dead < live[j].dead)) )		// check if i's dead falls within j's live range
 				{
 					// found that j is an interference to i
 
