@@ -8,7 +8,7 @@
 
 intNode* calcInterference(live_range* live, int size)
 {
-	int i, j;
+	int i, j, k;
 
 	int degree;
 
@@ -35,7 +35,7 @@ intNode* calcInterference(live_range* live, int size)
 				{
 					// found that j is an interference to i
 
-					// if interferences array size to small to add more realloc to a larger size
+					// if interferences array size too small to add more realloc to a larger size
 					if(degree%5 == 0)
 						interferences = (int*)realloc(interferences, (degree+5)*sizeof(int));
 
@@ -48,5 +48,40 @@ intNode* calcInterference(live_range* live, int size)
 		graph[i].interferences = interferences;			// add interferences to the graph
 		graph[i].degree = degree;					// add degree information to the graph
 	}
+
+	// Special Registers  R0, R4, R5, R6, and R7 are not reallocated
+	// and do not interfere with any registers so set degrees to 0 to ignore
+	graph[0].degree = 0;
+	graph[4].degree = 0;
+	graph[5].degree = 0;
+	graph[6].degree = 0;
+	graph[7].degree = 0;
+
+	// remove all edges that interfere with the special registers
+	for(i=0;i<size;i++)
+	{
+		for(j=0;j<graph[i].degree;j++)
+		{
+			if((graph[i].interferences[j] == 0) || (graph[i].interferences[j] == 4) ||
+					(graph[i].interferences[j] == 5) || (graph[i].interferences[j] == 6) ||
+					(graph[i].interferences[j] == 7))
+			{
+				for(k=j;k<(graph[i].degree-1);k++)
+				{
+					graph[i].interferences[k] = graph[i].interferences[k+1];
+				}
+				graph[i].degree--;
+				j--;
+			}
+		}
+	}
+	
 	return graph;									// return completed graph
 }
+
+
+
+
+
+
+

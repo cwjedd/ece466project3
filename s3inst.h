@@ -113,5 +113,6 @@ typedef struct lr {
 typedef struct in {
 	int* interferences;
 	int degree;
+	int valid;
 } intNode;
 #endif

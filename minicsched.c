@@ -41,6 +41,8 @@ void c_optimize() {
     inst_t current;
     int size=0;
 
+    intNode* intGraph;
+
     live_range *live;
     live = (live_range*)malloc(sizeof(live_range));
     block_array cfg;
@@ -83,7 +85,8 @@ void c_optimize() {
     /* Find single basic block loops and perform Iterative Modulo Scheduling */
 
   multiOpSetup(instList);
-  calcInterference(live, 100);
+  intGraph = calcInterference(live, 100);
+  regAlloc(intGraph, 100, 3, instList);
 	
   if (flag_regalloc)
     {
