@@ -61,6 +61,7 @@ void regAlloc(intNode* intGraph, int size, int k, inst_t instList)
 	int 		stackPtr = 0;
 	int 		found;
 	int*		registerMaps;
+	int		allocRegs = 1;
 	inst_t	current;
 
 	stack							= (int*)malloc(size*sizeof(int));
@@ -100,6 +101,19 @@ void regAlloc(intNode* intGraph, int size, int k, inst_t instList)
 			}
 		}
 
+		if((i == size) && (found == 0))
+		{
+			for(i=0;i<size;i++)
+			{
+				if((modGraph[i].degree > largestDegree))
+				{
+					found = 1;
+					largest = i;
+					largestDegree = modGraph[i].degree;
+				}
+			}
+		}
+
 		// remove largest node from graph if found
 		if(found == 1)
 		{
@@ -108,7 +122,6 @@ void regAlloc(intNode* intGraph, int size, int k, inst_t instList)
 			modGraph[largest].degree = -1;
 			modGraph[largest].interferences[0] = -1;		
 		
-
 			// push register to priority stack
 			stack[stackPtr++] = largest;
 			
@@ -146,7 +159,7 @@ void regAlloc(intNode* intGraph, int size, int k, inst_t instList)
 		// map all registers to new values
 		for(i=(stackPtr-1);i>=0;i--)					// old register
 		{
-			for(j=0;j<k;j++)							// new register k mapping
+			for(j=0;j<k;j++)								// new register k mapping
 			{
 				if(intsWith(j, stack[i], intGraph, size, registerMaps) == 0)
 				{
@@ -154,42 +167,56 @@ void regAlloc(intNode* intGraph, int size, int k, inst_t instList)
 					break;
 				}
 			}
+
+			if(registerMaps[stack[i]] == -1)			// check that coloring is possible
+			{
+				printf("No Possible Coloring with k = %d\n\n", k);
+				allocRegs = 0;
+				break;
+			}
 		}
 	}
 	else
-		printf("No Possible Coloring with k = %d\n\n", k);
-
-	// shift registers from new colors to register names
-	// in range of R10 to R(10+k-1)
-	for(i=0;i<size;i++)
-		registerMaps[i] += 10;
-
-	// do not rename spcial registers  R0, R4, R5, R6, and R7
-	registerMaps[0] = 0;
-	registerMaps[4] = 4;
-	registerMaps[5] = 5;
-	registerMaps[6] = 6;
-	registerMaps[7] = 7;
-
-	// debug print register mapping
-	/*printf("_____________Register Mapping_____________\n");
-	for(i=0;i<size;i++)
 	{
-		printf("R%03d -> R%03d\n", i, registerMaps[i]);
+		printf("Program Error: No Possible Coloring with k = %d\n\n", k);
+		allocRegs = 0;
 	}
-	printf("_______________End Mapping_______________\n");*/
 
-	// rename all registers in the code
-	current = instList;
-	while(current != NULL)
+	if(allocRegs == 1)
 	{
-		for(i=0;i<3;i++)
+		printf("Renaming Regs\n");
+		// shift registers from new colors to register names
+		// in range of R10 to R(10+k-1)
+		for(i=0;i<size;i++)
+			registerMaps[i] += 10;
+
+		// do not rename spcial registers  R0, R4, R5, R6, and R7
+		registerMaps[0] = 0;
+		registerMaps[4] = 4;
+		registerMaps[5] = 5;
+		registerMaps[6] = 6;
+		registerMaps[7] = 7;
+
+		// debug print register mapping
+		/*printf("_____________Register Mapping_____________\n");
+		for(i=0;i<size;i++)
 		{
-			if(current->ops[i].t == op_reg)
-				current->ops[i].reg = registerMaps[current->ops[i].reg];
+			printf("R%03d -> R%03d\n", i, registerMaps[i]);
 		}
+		printf("_______________End Mapping_______________\n");*/
+
+		// rename all registers in the code
+		current = instList;
+		while(current != NULL)
+		{
+			for(i=0;i<3;i++)
+			{
+				if(current->ops[i].t == op_reg)
+					current->ops[i].reg = registerMaps[current->ops[i].reg];
+			}
 		
-		current = current->next;
+			current = current->next;
+		}
 	}
 }
 

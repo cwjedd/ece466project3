@@ -1,0 +1,59 @@
+	.ORIG x2000
+	JSR main
+	HALT
+main:	ADD R6, R6, #-1
+	ADD R6, R6, #-1
+	STR R7, R6, #0
+	ADD R6, R6, #-1
+	STR R5, R6, #0
+	ADD R5, R6, #-1
+	ADD R6, R6, #-205
+	SET R10, #10
+	ADD R10, R5, #-1
+	ADD R10, R10, #0
+	STR R10, R10, #0
+	SET R10, #1
+	ADD R10, R5, #-1
+	ADD R10, R10, #1
+	IN 
+	ADD R10, R0, #0
+L2:	ADD R10, R10, #1
+	LDR R10, R10, #10
+	ADD R10, R10, #2
+	ADD R10, R10, #3
+	STR R10, R10, #5
+	ADD R10, R10, #6
+	SUB R10, R10, #20
+	BRp R10, L2
+	SET R0, #0
+	ADD R0, R10, #0
+	OUT 
+	SET R0, #0
+	ADD R0, R10, #0
+	OUT 
+	SET R0, #0
+	ADD R0, R10, #0
+	OUT 
+	SET R0, #0
+	ADD R0, R10, #0
+	OUT 
+	STR R10, R10, #0
+	ADD R10, R5, #-1
+	ADD R10, R5, #-2
+	STR R10, R10, #0
+	ADD R10, R5, #-2
+	ADD R10, R5, #-3
+	STR R10, R10, #0
+	ADD R10, R5, #-3
+	ADD R10, R5, #-4
+	STR R10, R10, #0
+	SET R10, #0
+	STR R10, R5, #3
+	BRA L1
+L1:	ADD R6, R6, #205
+	LDR R5, R6, #0
+	ADD R6, R6, #1
+	LDR R7, R6, #0
+	ADD R6, R6, #1
+	RET 
+	.END

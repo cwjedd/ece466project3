@@ -6,6 +6,7 @@
 int main()
 {
 	int i, j;
+	inst_t inst;
 	
 	live_range	test[10];
 	intNode* 		graph;
@@ -54,7 +55,7 @@ int main()
 	}
 	printf("_________End Graph_________\n\n");
 
-	regAlloc(graph, 10, 3);
+	//regAlloc(graph, 10, 1, inst);
 
 	return EXIT_SUCCESS;
 }
