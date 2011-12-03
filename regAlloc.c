@@ -184,7 +184,6 @@ void regAlloc(intNode* intGraph, int size, int k, inst_t instList)
 
 	if(allocRegs == 1)
 	{
-		printf("Renaming Regs\n");
 		// shift registers from new colors to register names
 		// in range of R10 to R(10+k-1)
 		for(i=0;i<size;i++)
