@@ -8,6 +8,8 @@ block_array generate_cfg();
 ddg_t generate_ddg();
 intNode* calcInterference(live_range* live, int size);
 void regAlloc(intNode* intGraph, int size, int k, inst_t instList);
+void calc_Range(int numInstrs, int numRegs, instr_set* liveIn, 
+								instr_set* liveOut, live_range* live);
 
 #endif	/* FUNCTIONS_H */
 
