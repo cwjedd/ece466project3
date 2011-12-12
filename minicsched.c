@@ -71,11 +71,11 @@ void c_optimize() {
     
     cfg = generate_cfg();
     ddg = generate_ddg();
-    live=liveness(size);
-    live->dead++;
-    live->dead--;
-    cfg.num_of_labels++;
-    cfg.num_of_labels--;
+    //live=liveness(size);
+    //live->dead++;
+    //live->dead--;
+    //cfg.num_of_labels++;
+    //cfg.num_of_labels--;
     /************************************************************************/
     /************************************************************************/
     /************************************************************************/
@@ -84,9 +84,11 @@ void c_optimize() {
 
     /* Find single basic block loops and perform Iterative Modulo Scheduling */
 
-  multiOpSetup(instList);
-  intGraph = calcInterference(live, 100);
-  regAlloc(intGraph, 100, 3, instList);
+  //multiOpSetup(instList);
+  intGraph = calcInterference(live, number_of_registers());
+  calcLiveness(&cfg);
+  printf("K=%d\n", k);
+  regAlloc(intGraph, number_of_registers(), k, instList);
 	
   if (flag_regalloc)
     {
@@ -260,7 +262,7 @@ void print_list(FILE *fptr, inst_t head) {
         head = head->next;
     }
 }
-
+/*
 void multiOpSetup(inst_t head)
 {
   inst_t tmp = head;
@@ -271,7 +273,7 @@ void multiOpSetup(inst_t head)
     tmp = tmp->next;
   }
 }
-
+*/
 
 
 

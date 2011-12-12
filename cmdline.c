@@ -501,8 +501,9 @@ char *cmdtext;
   int verbose=0;
   char *outfile=NULL;
   int k=10;
-  int w=4;
-
+  //int w=4;
+  int w = 2;
+  
   int flag_regalloc=0;
   int flag_sched=0;
   int flag_sched_first=0;
@@ -517,7 +518,7 @@ char *cmdtext;
 
  
 
-#line 521 "cmdline.c"
+#line 522 "cmdline.c"
 
 #define INITIAL 0
 #define FNAME 1
@@ -702,10 +703,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 29 "cmdline.lex"
+#line 30 "cmdline.lex"
 
 
-#line 709 "cmdline.c"
+#line 710 "cmdline.c"
 
 	if ( !(yy_init) )
 		{
@@ -790,17 +791,17 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 31 "cmdline.lex"
+#line 32 "cmdline.lex"
 {}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "cmdline.lex"
+#line 34 "cmdline.lex"
 { flag_regalloc=1; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 34 "cmdline.lex"
+#line 35 "cmdline.lex"
 { 
   if(!flag_regalloc) 
     flag_sched_first=1; 
@@ -809,76 +810,76 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 40 "cmdline.lex"
+#line 41 "cmdline.lex"
 { usage(); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 41 "cmdline.lex"
+#line 42 "cmdline.lex"
 { usage(); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 43 "cmdline.lex"
+#line 44 "cmdline.lex"
 { verbose = 1; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 45 "cmdline.lex"
+#line 46 "cmdline.lex"
 { BEGIN(FNAME); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 46 "cmdline.lex"
+#line 47 "cmdline.lex"
 { BEGIN(K); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 47 "cmdline.lex"
+#line 48 "cmdline.lex"
 { BEGIN(W); }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 49 "cmdline.lex"
+#line 50 "cmdline.lex"
 { infile[infile_cnt++] = strdup(cmdtext); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 51 "cmdline.lex"
+#line 52 "cmdline.lex"
 { outfile = strdup(cmdtext); BEGIN(0); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 52 "cmdline.lex"
+#line 53 "cmdline.lex"
 { }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 54 "cmdline.lex"
+#line 55 "cmdline.lex"
 { k = atoi(cmdtext); BEGIN(0); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 55 "cmdline.lex"
+#line 56 "cmdline.lex"
 { }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 57 "cmdline.lex"
+#line 58 "cmdline.lex"
 { w = atoi(cmdtext); BEGIN(0); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 58 "cmdline.lex"
+#line 59 "cmdline.lex"
 { }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 61 "cmdline.lex"
+#line 62 "cmdline.lex"
 ECHO;
 	YY_BREAK
-#line 882 "cmdline.c"
+#line 883 "cmdline.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(FNAME):
 case YY_STATE_EOF(K):
@@ -1879,7 +1880,7 @@ void cmdfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "cmdline.lex"
+#line 62 "cmdline.lex"
 
 
 

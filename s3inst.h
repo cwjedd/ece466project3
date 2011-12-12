@@ -74,9 +74,9 @@ struct inst_d {
   operand ops[3];
   int data;
   int endOp;
-  int multiEnd;	// probably for the same thing endOp is but added for safety
   inst_t next;
   int count;
+  int depth;
 };
 
 typedef struct nodeptr {
@@ -101,8 +101,19 @@ typedef struct {
     int **flow_arc;
     int **anti_arc;
     int **output_arc;
+    int *def_inst;
+    instr_set *use_inst;
+    int *ready_cycle;
+    int *schedule_time;
 } ddg_t;
 
+typedef struct {
+    int use0;
+    int use1;
+    int def;
+    int succ0;
+    int succ1;
+} usedef_t;
 
 typedef struct lr {
     int go_live;
@@ -115,4 +126,5 @@ typedef struct in {
 	int degree;
 	int valid;
 } intNode;
+
 #endif
